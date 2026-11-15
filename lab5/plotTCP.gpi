@@ -1,0 +1,10 @@
+#!/usr/bin/gnuplot
+set xlabel "Time, sec"
+set ylabel "Mbit/sec"
+files = system("ls -1 tcp_*.txt")
+phone(f) = substr(f, 5, strlen(f) - 4)
+filter = " | grep -v -E 'sender|receiver'"
+plot for [file in files] "< grep -E '^\\[ +[0-9]+\\] +[0-9.]+-[0-9.]+ +sec' ".file.filter \
+  using 7 title phone(file) with lines
+pause mouse close
+
